@@ -2,7 +2,7 @@ package com.pyesmeadow.george.instruction;
 
 import com.pyesmeadow.george.Hart;
 
-public class AddImmediateInstruction extends ITypeInstruction {
+public class AddImmediateInstruction extends TypeIInstruction {
     public AddImmediateInstruction(int instruction) {
         super(instruction);
     }
