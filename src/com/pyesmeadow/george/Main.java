@@ -5,6 +5,8 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.nio.ByteBuffer;
+import java.nio.ByteOrder;
+import java.util.Arrays;
 import java.util.Scanner;
 
 // Press Shift twice to open the Search Everywhere dialog and type `show whitespaces`,
@@ -17,19 +19,17 @@ public class Main {
         Scanner consoleReader = new Scanner(System.in);
         String filepath = consoleReader.nextLine();
 
-        File instructionsFile = new File(filepath);
-        try (FileInputStream instructionsStream = new FileInputStream(instructionsFile)) {
-            byte[] instructionBytes = instructionsStream.readNBytes(4);
-            int instruction = ByteBuffer.wrap(instructionBytes).getInt();
-            executeInstruction(instruction);
-        } catch (FileNotFoundException e) {
-            throw new RuntimeException(e);
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
-    }
+        IMemoryProvider memoryProvider = new FileMemoryProvider(filepath);
 
-    private static void executeInstruction(int instruction) {
-        System.out.printf("Executing com.pyesmeadow.george.instruction %d\n", instruction);
+        Hart h = new Hart(memoryProvider);
+        h.x[4] = 3;
+
+        System.out.println(Arrays.toString(h.memory));
+        System.out.println(Arrays.toString(h.x));
+
+        h.step();
+
+        System.out.println(Arrays.toString(h.memory));
+        System.out.println(Arrays.toString(h.x));
     }
 }

@@ -9,6 +9,8 @@ public class AddImmediateInstruction extends TypeIInstruction {
 
     @Override
     public void execute(Hart hart) {
-        throw new UnsupportedOperationException();
+        int rs1Value = hart.x[rs1];
+        int sum = rs1Value + imm;
+        hart.x[rd] = sum;
     }
 }
